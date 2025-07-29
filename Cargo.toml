@@ -1,0 +1,21 @@
+[package]
+name = "min_repro"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+bevy = { version = "0.16", features = ["serialize", "wayland"] }
+
+bevy_mod_scripting = { git = "https://github.com/alexparlett/bevy_mod_scripting.git", branch = "bevy_0.16", features = [
+    "luajit",
+    "unsafe_lua_modules",
+] }
+
+# bevy_mod_scripting = { path = "../deleteme/bevy_mod_scripting", features = [
+#     "luajit",
+#     "unsafe_lua_modules",
+# ] }
+
+bevy_asset_loader = { version = "0.23.0", features = [
+    "standard_dynamic_assets",
+] }
