@@ -49,9 +49,6 @@ callback_labels!(Test => "test");
 #[derive(ScheduleLabel, Debug, Clone, PartialEq, Eq, Hash)]
 pub struct BmsSchedule;
 
-#[derive(Component, Default)]
-pub struct MainCam;
-
 // A lot of the stuff I do here was due to me trying to desperately reproduce the error
 // so I tried to replicate the details from my game as much as I could
 fn main() {
@@ -133,8 +130,9 @@ pub fn trigger_lua_event(
     label: String,
     script_id: String,
 ) -> Result<(), InteropError> {
-    ctx.world()?.with_global_access(|world| {
-        println!("trigger_lua_event {:?} {:?}", script_id, label);
+    Ok(ctx.world()?.with_global_access(|world| {
+        println!("trigger_lua_event {:?} {:?}", label, script_id);
+
         let command = RunScriptCallback::<LuaScriptingPlugin>::new(
             script_id.into(),
             Entity::from_raw(0),
@@ -142,7 +140,7 @@ pub fn trigger_lua_event(
             Default::default(),
             false,
         );
+
         world.commands().queue(command);
-    })?;
-    Ok(())
+    })?)
 }
